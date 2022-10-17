@@ -11,11 +11,11 @@ Group=tomcat
 Environment=JAVA_HOME={{ JAVA_HOME }}
 Environment='JAVA_OPTS=-Djava.awt.headless=true'
 
-Environment=CATALINA_HOME=/usr/share/tomcat-"{{ tomcat_ver }}"
-Environment=CATALINA_BASE=/usr/share/tomcat-"{{ tomcat_ver }}"
-Environment=CATALINA_PID=/usr/share/tomcat"-{{ tomcat_ver }}"/temp/tomcat.pid
+Environment=CATALINA_HOME=/usr/share/tomcat-{{ tomcat_ver }}
+Environment=CATALINA_BASE=/usr/share/tomcat-{{ tomcat_ver }}
+Environment=CATALINA_PID=/usr/share/tomcat-{{ tomcat_ver }}/temp/tomcat.pid
 
-ExecStart=/usr/share/tomcat"-{{ tomcat_ver }}"/bin/catalina.sh start
+ExecStart=/usr/share/tomcat-{{ tomcat_ver }}/bin/catalina.sh start
 ExecStop=/usr/share/tomcat-{{ tomcat_ver }}"/bin/catalina.sh stop
 
 [Install]
