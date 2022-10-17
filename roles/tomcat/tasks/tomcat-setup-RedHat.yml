@@ -22,7 +22,7 @@
 
 - name: Create a tomcat directory
   file:
-    path: /usr/share/tomcat
+    path: /usr/share/tomcat-"{{ tomcat_ver }}"
     state: directory
     owner: tomcat
     group: tomcat
@@ -30,12 +30,12 @@
 - name: Extract tomcat archive
   unarchive:
     src: "{{ tomcat_archive_dest }}"
-    dest: /usr/share/tomcat
+    dest: /usr/share/tomcat-"{{ tomcat_ver }}"
     owner: tomcat
     group: tomcat
     remote_src: yes
     extra_opts: "--strip-components=1"
-    creates: /usr/share/tomcat/bin
+    creates: /usr/share/tomcat-"{{ tomcat_ver }}"/bin
 
 - name: Copy tomcat service file
   template:
@@ -54,7 +54,7 @@
 - name: Set UI access credentials
   template:
     src: tomcat-users.xml.j2
-    dest: /usr/share/tomcat/conf/tomcat-users.xml
+    dest: /usr/share/tomcat-"{{ tomcat_ver }}"/conf/tomcat-users.xml
   notify: restart tomcat
 
 - name: Allow access to Manager and Host Manager apps from any IP
@@ -62,6 +62,6 @@
     src: context.xml.j2 
     dest: "{{ item }}"
   with_items:
-    - /usr/share/tomcat/webapps/host-manager/META-INF/context.xml
-    - /usr/share/tomcat/webapps/manager/META-INF/context.xml
+    - /usr/share/tomcat-"{{ tomcat_ver }}"/webapps/host-manager/META-INF/context.xml
+    - /usr/share/tomcat-"{{ tomcat_ver }}"/webapps/manager/META-INF/context.xml
   notify: restart tomcat
